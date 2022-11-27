@@ -17,6 +17,7 @@ const Todos = styled.ol`
 `
 const TodoList = () => {
   const toDos = useRecoilValue(todoStateAtom);
+  console.log(toDos);
   return(
     <div>
       <h1>To Dos</h1>

@@ -4,12 +4,12 @@ export interface IForm {
   toDo: string;
 }
 
-export interface ITodo {
+export interface IToDo {
   text: string;
   id: number;
   category: "TO_DO" | "DOING" | "DONE";
 }
-export const todoStateAtom = atom<ITodo[]>({
+export const todoStateAtom = atom<IToDo[]>({
   key: "toDo",
   default:[],
 })
