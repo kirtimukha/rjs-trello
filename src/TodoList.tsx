@@ -23,7 +23,8 @@ const TodoList = () => {
       <hr />
       <CreateToDo />
       <Todos type="1">
-        {toDos.map((toDo) => <ToDo text={toDo.text} category={toDo.category} id={toDo.id}  />)}
+        {/*{toDos.map((toDo) => <ToDo text={toDo.text} category={toDo.category} id={toDo.id}  />)}*/}
+        {toDos.map((toDo) => <ToDo key={toDo.id} {...toDo} />)} {/* { ...toDo } toDo(IToDo[])의 모든 원소가 동일한 형태로 반복된다.*/}
       </Todos>
 
 
