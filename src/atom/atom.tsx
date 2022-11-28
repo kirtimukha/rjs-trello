@@ -1,4 +1,4 @@
-import {atom} from "recoil";
+import {atom, selector} from "recoil";
 
 export interface IForm {
   toDo: string;
@@ -9,7 +9,21 @@ export interface IToDo {
   id: number;
   category: "TO_DO" | "DOING" | "DONE";
 }
-export const todoStateAtom = atom<IToDo[]>({
+export const toDoStateAtom = atom<IToDo[]>({
   key: "toDo",
   default:[],
+})
+
+export const toDoSelector = selector({
+  //atom 스테이트를 변환시키는 용도로 셀렉터를 사용한다.
+  key:"toDoSelector",
+  get: ({ get }) => {
+   // const toDos = get(toDoStateAtom);
+    const toDos = get(toDoStateAtom)
+    return [
+      toDos.filter((toDo) => toDo.category === "TO_DO"),
+      toDos.filter((toDo) => toDo.category === "DOING"),
+      toDos.filter((toDo) => toDo.category === "DONE"),
+    ];
+  }
 })
