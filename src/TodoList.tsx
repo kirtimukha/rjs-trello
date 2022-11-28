@@ -2,8 +2,8 @@ import React from 'react'
 import CreateToDo from "./components/CreateToDo";
 import ToDo from "./components/ToDo";
 import styled from "styled-components";
-import {useRecoilValue} from "recoil";
-import {toDoSelector, toDoStateAtom} from "./atom/atom";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {categoryState, toDoSelector, toDoState} from "./atom/atom";
 const Todos = styled.ol`
   float: none;
   margin:0;
@@ -16,40 +16,33 @@ const Todos = styled.ol`
     }
 `
 const TodoList = () => {
-  //const toDos = useRecoilValue(toDoStateAtom);
-  const [todo, doing, done] = useRecoilValue(toDoSelector);
-  //console.log(selectorOutput);
+  //const toDos = useRecoilValue(toDoState);
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState)
+  const fnCateChoice = (event:React.FormEvent<HTMLSelectElement>) => {
+   // console.log(event.currentTarget.value);
+    setCategory(event.currentTarget.value)
+  }
+  console.log(category);
   return(
     <div>
       <h1>Enter</h1>
-
+      <select name="" id="" value={category} onInput={fnCateChoice}>
+        <option value="TO_DO">To Do</option>
+        <option value="DOING">Doing</option>
+        <option value="DONE">Done</option>
+      </select>
       <CreateToDo />
       <hr />
-      <h2>
-        To Do
-      </h2>
+      {/*<Todos type="1">*/}
+      {/*</Todos>*/}
       <Todos type="1">
-        {/*{toDos.map((toDo) => <ToDo text={toDo.text} category={toDo.category} id={toDo.id}  />)}*/}
-        {todo.map((toDo) => <ToDo key={toDo.id} {...toDo} />)} {/* { ...toDo } toDo(IToDo[])의 모든 원소가 동일한 형태로 반복된다.*/}
+        {toDos?.map(
+          (toDo) => (<ToDo key={toDo.id} {...toDo}/> )
+        )}
       </Todos>
-      <hr />
 
-      <h2>
-        Doing
-      </h2>
-      <Todos type="1">
-        {/*{toDos.map((toDo) => <ToDo text={toDo.text} category={toDo.category} id={toDo.id}  />)}*/}
-        {doing.map((toDo) => <ToDo key={toDo.id} {...toDo} />)} {/* { ...toDo } toDo(IToDo[])의 모든 원소가 동일한 형태로 반복된다.*/}
-      </Todos>
-      <hr />
 
-      <h2>
-       Done
-      </h2>
-      <Todos type="1">
-        {/*{toDos.map((toDo) => <ToDo text={toDo.text} category={toDo.category} id={toDo.id}  />)}*/}
-        {done.map((toDo) => <ToDo key={toDo.id} {...toDo} />)} {/* { ...toDo } toDo(IToDo[])의 모든 원소가 동일한 형태로 반복된다.*/}
-      </Todos>
 
 
     </div>

@@ -1,10 +1,10 @@
 import React from 'react'
-import {IToDo, toDoStateAtom} from "../atom/atom";
+import {IToDo, toDoState} from "../atom/atom";
 import {useSetRecoilState} from "recoil";
 
 {/*  2. 버튼에 네임을 붙이는 방식 */}
 const ToDo = ({text, category, id}:IToDo) => { //2. id를 인자로 추가하고 아톰을 수정할 수 있도록 한다.
-  const setToDos = useSetRecoilState(toDoStateAtom);
+  const setToDos = useSetRecoilState(toDoState);
   const fnChgCate = (event:React.MouseEvent<HTMLButtonElement>) => {
     //console.log( event.currentTarget.name ) ; 0. 0을 1처럼 쓸 수 있다
     const {currentTarget:{name}} = event; // 1. event의 커런트 타켓에 들어가서 네임을 받는다

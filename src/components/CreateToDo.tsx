@@ -1,11 +1,11 @@
 import React from "react";
 import {useForm} from "react-hook-form";
 import { useSetRecoilState} from "recoil";
-import {IForm, toDoStateAtom} from "../atom/atom";
+import {IForm, toDoState} from "../atom/atom";
 
 const CreateToDo = () => {
   const { register, handleSubmit, setValue } = useForm<IForm>();
-  const setToDos =useSetRecoilState(toDoStateAtom);
+  const setToDos =useSetRecoilState(toDoState);
   const handleValid = ({toDo}:IForm)=>{
     setToDos((oldTodos) => [{text:toDo, id:Date.now(), category:"TO_DO"}, ...oldTodos])
     //setToDos 는 스테이트를 직접 받을 수도 있고, 다른 함수를 받을 수도 있다
