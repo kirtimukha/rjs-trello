@@ -4,18 +4,22 @@ import {atom, selector} from "recoil";
 export interface IForm {
   toDo: string;
 }
-
-type categories = "TO_DO" | "DOING" | "DONE";
+export enum Categories {
+  "TO_DO"= "TO_DO",
+  "DOING" = "DOING",
+  "DONE"= "DONE"
+}
+//type categories = "TO_DO" | "DOING" | "DONE";
 
 export interface IToDo {
   text: string;
   id: number;
-  category: categories;
+  category: Categories;
 }
 
-export const categoryState = atom<categories>({
-key: "category",
-  default: "TO_DO"
+export const categoryState = atom<Categories>({
+  key: "category",
+  default: Categories.TO_DO
 })
 
 export const toDoState = atom<IToDo[]>({

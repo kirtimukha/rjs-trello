@@ -3,7 +3,7 @@ import CreateToDo from "./components/CreateToDo";
 import ToDo from "./components/ToDo";
 import styled from "styled-components";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
-import {categoryState, toDoSelector, toDoState} from "./atom/atom";
+import {Categories, categoryState, toDoSelector, toDoState} from "./atom/atom";
 const Todos = styled.ol`
   float: none;
   margin:0;
@@ -30,9 +30,9 @@ const TodoList = () => {
       {/*  <option value="DOING">Doing</option>*/}
       {/*  <option value="DONE">Done</option>*/}
       {/*</select>*/}
-      <label htmlFor="selTodo"> <input  onInput={fnCateChoice} type="radio" id="selTodo" name="todo_radio" radioGroup="todo_radio" value="TO_DO"/> To Do</label>
-      <label htmlFor="selDoing"><input onInput={fnCateChoice} type="radio" id="selDoing" name="todo_radio" radioGroup="todo_radio" value="DOING"/> Doing</label>
-      <label htmlFor="selDone"><input  onInput={fnCateChoice} type="radio" id="selDone" name="todo_radio" radioGroup="todo_radio" value="DONE" /> Done</label>
+      <label htmlFor="selTodo"> <input  onInput={fnCateChoice} type="radio" id="selTodo" name="todo_radio" radioGroup="todo_radio" value={Categories.TO_DO}/> To Do</label>
+      <label htmlFor="selDoing"><input onInput={fnCateChoice} type="radio" id="selDoing" name="todo_radio" radioGroup="todo_radio" value={Categories.DOING}/> Doing</label>
+      <label htmlFor="selDone"><input  onInput={fnCateChoice} type="radio" id="selDone" name="todo_radio" radioGroup="todo_radio" value={Categories.DONE} /> Done</label>
       <CreateToDo />
 
       <hr />

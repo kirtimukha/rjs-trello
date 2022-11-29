@@ -1,5 +1,5 @@
 import React from 'react'
-import {IToDo, toDoState} from "../atom/atom";
+import {Categories, IToDo, toDoState} from "../atom/atom";
 import {useSetRecoilState} from "recoil";
 
 {/*  2. 버튼에 네임을 붙이는 방식 */}
@@ -25,14 +25,14 @@ const ToDo = ({text, category, id}:IToDo) => { //2. id를 인자로 추가하고
   return (
     <li>
       <span>{text}</span>
-      {category !== "TO_DO" && (
-        <button name="TO_DO" onClick={fnChgCate}>To do</button>
+      {category !== Categories.TO_DO && (
+        <button name={Categories.TO_DO} onClick={fnChgCate}>To do</button>
       )}
-      {category !== "DOING" && (
-        <button name="DOING" onClick={fnChgCate}>Doing</button>
+      {category !==  Categories.DOING && (
+        <button name={Categories.DOING} onClick={fnChgCate}>Doing</button>
       )}
-      {category !== "DONE" && (
-        <button name="DONE" onClick={fnChgCate}>Done</button>
+      {category !== Categories.DONE && (
+        <button name={Categories.DONE} onClick={fnChgCate}>Done</button>
       )}
     </li>
   )
