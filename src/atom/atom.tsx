@@ -1,15 +1,19 @@
 import {atom, selector} from "recoil";
+//selector : state 를 입력 받는 함수를 거쳐서 반환된 값을 말함
 
 export interface IForm {
   toDo: string;
 }
 
+type categories = "TO_DO" | "DOING" | "DONE";
+
 export interface IToDo {
   text: string;
   id: number;
-  category: "TO_DO" | "DOING" | "DONE";
+  category: categories;
 }
-export const categoryState = atom({
+
+export const categoryState = atom<categories>({
 key: "category",
   default: "TO_DO"
 })
@@ -18,7 +22,6 @@ export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default:[],
 })
-
 export const toDoSelector = selector({
   key:"toDoSelector",
   get: ({ get }) => {

@@ -16,23 +16,25 @@ const Todos = styled.ol`
     }
 `
 const TodoList = () => {
-  //const toDos = useRecoilValue(toDoState);
   const toDos = useRecoilValue(toDoSelector);
-  const [category, setCategory] = useRecoilState(categoryState)
-  const fnCateChoice = (event:React.FormEvent<HTMLSelectElement>) => {
-   // console.log(event.currentTarget.value);
-    setCategory(event.currentTarget.value)
-  }
+  const [category, setCategory] = useRecoilState(categoryState);
+  const fnCateChoice = (event:React.FormEvent<HTMLInputElement>) => {
+    setCategory(event.currentTarget.value as any)
+  };
   console.log(category);
   return(
     <div>
       <h1>Enter</h1>
-      <select name="" id="" value={category} onInput={fnCateChoice}>
-        <option value="TO_DO">To Do</option>
-        <option value="DOING">Doing</option>
-        <option value="DONE">Done</option>
-      </select>
+      {/*<select name="" id="" value={category} onInput={fnCateChoice} >*/}
+      {/*  <option value="TO_DO">To Do</option>*/}
+      {/*  <option value="DOING">Doing</option>*/}
+      {/*  <option value="DONE">Done</option>*/}
+      {/*</select>*/}
+      <label htmlFor="selTodo"> <input  onInput={fnCateChoice} type="radio" id="selTodo" name="todo_radio" radioGroup="todo_radio" value="TO_DO"/> To Do</label>
+      <label htmlFor="selDoing"><input onInput={fnCateChoice} type="radio" id="selDoing" name="todo_radio" radioGroup="todo_radio" value="DOING"/> Doing</label>
+      <label htmlFor="selDone"><input  onInput={fnCateChoice} type="radio" id="selDone" name="todo_radio" radioGroup="todo_radio" value="DONE" /> Done</label>
       <CreateToDo />
+
       <hr />
       {/*<Todos type="1">*/}
       {/*</Todos>*/}
