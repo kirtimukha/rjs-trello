@@ -16,12 +16,13 @@ const Todos = styled.ol`
     }
 `
 const TodoList = () => {
-  const toDos = useRecoilValue(toDoSelector);
+
+  const toDos = useRecoilValue(toDoSelector);//2차원 배열(toDos, 배열의 배열)
   const [category, setCategory] = useRecoilState(categoryState);
   const fnCateChoice = (event:React.FormEvent<HTMLInputElement>) => {
     setCategory(event.currentTarget.value as any)
   };
-  console.log(category);
+
   return(
     <div>
       <h1>Enter</h1>
@@ -30,23 +31,24 @@ const TodoList = () => {
       {/*  <option value="DOING">Doing</option>*/}
       {/*  <option value="DONE">Done</option>*/}
       {/*</select>*/}
-      <label htmlFor="selTodo"> <input  onInput={fnCateChoice} type="radio" id="selTodo" name="todo_radio" radioGroup="todo_radio" value={Categories.TO_DO}/> To Do</label>
-      <label htmlFor="selDoing"><input onInput={fnCateChoice} type="radio" id="selDoing" name="todo_radio" radioGroup="todo_radio" value={Categories.DOING}/> Doing</label>
-      <label htmlFor="selDone"><input  onInput={fnCateChoice} type="radio" id="selDone" name="todo_radio" radioGroup="todo_radio" value={Categories.DONE} /> Done</label>
+      <label htmlFor="selTodo">
+        <input  onInput={fnCateChoice} type="radio" id="selTodo" name="todo_radio" radioGroup="todo_radio" value={Categories.TO_DO}/> To Do
+      </label>
+      <label htmlFor="selDoing">
+        <input onInput={fnCateChoice} type="radio" id="selDoing" name="todo_radio" radioGroup="todo_radio" value={Categories.DOING}/> Doing
+      </label>
+      <label htmlFor="selDone">
+        <input  onInput={fnCateChoice} type="radio" id="selDone" name="todo_radio" radioGroup="todo_radio" value={Categories.DONE} /> Done
+      </label>
       <CreateToDo />
 
       <hr />
-      {/*<Todos type="1">*/}
-      {/*</Todos>*/}
+
       <Todos type="1">
         {toDos?.map(
-          (toDo) => (<ToDo key={toDo.id} {...toDo}/> )
+          (toDo) => (<ToDo key={toDo.id} {...toDo }/> )
         )}
       </Todos>
-
-
-
-
     </div>
   )
 }
