@@ -1,7 +1,7 @@
 import React from 'react';
 import {createGlobalStyle} from "styled-components";
 import {useRecoilState} from "recoil";
-import {hourSelector, minuteState} from './atom/atom';
+import {hourSelector, minuteState} from './atom/atom-selector';
 
 const GlobalStyle = createGlobalStyle`
   * {

@@ -1,50 +1,178 @@
-import React from 'react';
-import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
-import {createGlobalStyle} from "styled-components";
+import React from "react";
+import {DragDropContext, Draggable, Droppable, DropResult,} from "react-beautiful-dnd";
+import styled, {createGlobalStyle} from "styled-components";
+import reset from "styled-reset";
+import {useRecoilState} from "recoil";
+import {toDoState} from "./atom/atom";
 
 const GlobalStyle = createGlobalStyle`
+  ${reset}
+
+  ;
   * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-
   }
 
-  ul, li {
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, menu, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  main, menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
+  }
+
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure,
+  footer, header, hgroup, main, menu, nav, section {
+    display: block;
+  }
+
+  /* HTML5 hidden-attribute fix for newer browsers */
+  *[hidden] {
+    display: none;
+  }
+
+  body {
+    font-family: 'Open Sans', 'Source Sans Pro', sans-serif;
+    line-height: 1;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
+  }
+
+  menu, ol, ul {
     list-style: none;
   }
 
+  blockquote, q {
+    quotes: none;
+  }
+
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
-`
-{/* [ Droppable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. 3. 첫번째 아규먼트는 droppable로부터 받음. 4. draggableProps 와 dragHandelProps 속성을 가짐*/
+`;
+{
+  /* [ Droppable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. 3. 첫번째 아규먼트는 droppable로부터 받음. 4. draggableProps 와 dragHandelProps 속성을 가짐*/
 }
-{/* [ Draggable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. */
+{
+  /* [ Draggable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. */
 }
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 480px;
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+`;
+const Boards = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+`;
+const Board = styled.div`
+  width: 100%;
+  min-height: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.boardColor};
+`;
+const Card = styled.div`
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: ${(props) => props.theme.cardColor};
+
+  :first-child {
+    margin-top: 0;
+  }
+`;
 
 function App() {
-  const onDragEnd = () => {
-  }
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const changeToDo = () => {
+    // setToDos (toDos, toDoState);
+  };
+  const onDragEnd = ({draggableId, destination, source}: DropResult) => {
+    //onDragEnd 는 : result, provided 두가지 아규먼트를 가짐
+
+    // 1. 변경점이 없으면 아무 변화 없음
+    if (!destination) return;
+    // 2. 변경점이 있으면 setToDos 실행
+    setToDos((oldToDos) => {
+      const copyToDos = [...oldToDos];
+      //1) delete item on source.index
+      copyToDos.splice(source.index, 1);
+      //2) put back the item(draggableId) on destination.index
+      copyToDos.splice(destination?.index, 0, draggableId);
+      //3)
+      return copyToDos;
+
+    });
+  };
+
   return (
     <>
       <GlobalStyle/>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div>
-          <Droppable droppableId="wrapDrop">
-            {(arg) => (
-              <ul ref={arg.innerRef} {...arg.droppableProps} >
-                <Draggable draggableId="zero" index={0}>
-                  {(arg) => (<li ref={arg.innerRef} {...arg.draggableProps}><span  {...arg.dragHandleProps}> &#9917;</span>Zero</li>)}
-                </Draggable>
-                <Draggable draggableId="first" index={1}>
-                  {(arg) => (<li ref={arg.innerRef} {...arg.draggableProps}><span  {...arg.dragHandleProps}> &#9917;</span>First</li>)}
-                </Draggable>
-              </ul>
-            )}
-          </Droppable>
-        </div>
+        <Wrapper>
+          <Boards>
+            <Droppable droppableId="wrapDrop">
+              {(magic) => (
+                <Board ref={magic.innerRef} {...magic.droppableProps}>
+                  {toDos.map((toDo, index) => (
+                    <Draggable draggableId={toDo} key={toDo} index={index}>
+                      {/*//드래거블 아이디에 ""(큰따옴표) 로 이름을 주면 Card 드래그 드랍시 1개만 보이므로 {}(대괄호)사용.*/}
+                      {/*//드래거블 아이디와 key 네임이 같아야 한다 */}
+                      {(magic) => (
+                        <Card
+                          ref={magic.innerRef}
+                          {...magic.draggableProps}
+                          {...magic.dragHandleProps}
+                          onChange={changeToDo}
+                        >
+                          {toDo}
+                        </Card>
+                      )}
+                    </Draggable>
+                  ))}
+                  {magic.placeholder}
+                </Board>
+              )}
+            </Droppable>
+          </Boards>
+        </Wrapper>
       </DragDropContext>
     </>
-  )
+  );
 }
 
 export default App;
