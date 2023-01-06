@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from "./reportWebVitals";
-import AppSetSelector from './App-set-selector';
 import {QueryClient, QueryClientProvider} from "react-query";
 import {RecoilRoot} from "recoil";
 import {ThemeProvider} from "styled-components";
 import {darkTheme} from "./theme";
+import App from "./App";
 
 const queryClient = new QueryClient();
 
@@ -14,14 +14,14 @@ if (!rootElement) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
+ /* <React.StrictMode>*/
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={darkTheme}>
-          <AppSetSelector/>
+          <App/>
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>
-  </React.StrictMode>,
+ /* </React.StrictMode>,*/
 );
 reportWebVitals();
