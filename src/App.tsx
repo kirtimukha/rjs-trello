@@ -24,9 +24,6 @@ function App() {
   const onHoursChange = (event: React.FormEvent<HTMLInputElement>) => {
     setHours(+event.currentTarget.value)
   }
-
- // const hours = useRecoilValue(hourSelector);
-
   return (
     <>
       <GlobalStyle/>

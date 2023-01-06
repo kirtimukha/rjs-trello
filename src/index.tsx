@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import reportWebVitals from "./reportWebVitals";
 import App from './App';
 import {QueryClient, QueryClientProvider} from "react-query";
 import {RecoilRoot} from "recoil";
@@ -24,3 +25,4 @@ root.render(
   </React.StrictMode>,
 
 );
+reportWebVitals();

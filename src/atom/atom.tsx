@@ -12,7 +12,10 @@ export const hourSelector = selector({
         const minutes = get(minuteState);
         return minutes/60 ;
     },
+    // state 를 set 하도록 함 =  state가 어떤 형태이든 수정될 수 있도록 함
+    // newValue : 보낼 값
     set: ({set}, newValue ) => {
-        console.log(newValue);
+        const minutes = Number(newValue) * 60;
+       set(minuteState, minutes);
     }
 })
