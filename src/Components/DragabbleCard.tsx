@@ -18,6 +18,11 @@ interface IDraggableCardProps {
   index: number;
 }
 function DragabbleCard({toDo, index }: IDraggableCardProps)  {
+    console.log(toDo, 'has been rendered.');//리액트는 컴포넌트의 state가 변경되면 칠드런 모두가 재렌더링 된다.
+  // [ @@ 불필요한 렌더링 방지 REACT MEMO @@ ]
+  // reactMemo 가 사용된 컴포넌트는 prop이 변경될 때만 재렌더링 됨
+  // 즉, prop이 변경되지 않는한 컴포넌트 재렌더링 발생하지 않음
+
   const changeToDo = () => {
     // setToDos (toDos, toDoState);
   };
