@@ -1,9 +1,10 @@
 import React from "react";
-import {DragDropContext, Draggable, Droppable, DropResult,} from "react-beautiful-dnd";
+import {DragDropContext,  Droppable, DropResult,} from "react-beautiful-dnd";
 import styled, {createGlobalStyle} from "styled-components";
 import reset from "styled-reset";
 import {useRecoilState} from "recoil";
 import {toDoState} from "./atom/atom";
+import DragabbleCard from "./Components/DragabbleCard";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
@@ -105,22 +106,11 @@ const Board = styled.div`
   border-radius: 5px;
   background-color: ${(props) => props.theme.boardColor};
 `;
-const Card = styled.div`
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.cardColor};
 
-  :first-child {
-    margin-top: 0;
-  }
-`;
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const changeToDo = () => {
-    // setToDos (toDos, toDoState);
-  };
+
   const onDragEnd = ({draggableId, destination, source}: DropResult) => {
     //onDragEnd 는 : result, provided 두가지 아규먼트를 가짐
 
@@ -149,20 +139,21 @@ function App() {
               {(magic) => (
                 <Board ref={magic.innerRef} {...magic.droppableProps}>
                   {toDos.map((toDo, index) => (
-                    <Draggable draggableId={toDo} key={toDo} index={index}>
-                      {/*//드래거블 아이디에 ""(큰따옴표) 로 이름을 주면 Card 드래그 드랍시 1개만 보이므로 {}(대괄호)사용.*/}
-                      {/*//드래거블 아이디와 key 네임이 같아야 한다 */}
-                      {(magic) => (
-                        <Card
-                          ref={magic.innerRef}
-                          {...magic.draggableProps}
-                          {...magic.dragHandleProps}
-                          onChange={changeToDo}
-                        >
-                          {toDo}
-                        </Card>
-                      )}
-                    </Draggable>
+                    <DragabbleCard key={toDo} toDo={toDo} index={index} />
+                    // <Draggable draggableId={toDo} key={toDo} index={index}>
+                    //   {/*//드래거블 아이디에 ""(큰따옴표) 로 이름을 주면 Card 드래그 드랍시 1개만 보이므로 {}(대괄호)사용.*/}
+                    //   {/*//드래거블 아이디와 key 네임이 같아야 한다 */}
+                    //   {(magic) => (
+                    //     <Card
+                    //       ref={magic.innerRef}
+                    //       {...magic.draggableProps}
+                    //       {...magic.dragHandleProps}
+                    //       onChange={changeToDo}
+                    //     >
+                    //       {toDo}
+                    //     </Card>
+                    //   )}
+                    // </Draggable>
                   ))}
                   {magic.placeholder}
                 </Board>
