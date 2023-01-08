@@ -4,12 +4,11 @@ import styled, {createGlobalStyle} from "styled-components";
 import reset from "styled-reset";
 import {useRecoilState} from "recoil";
 import {toDoState} from "./atom/atom";
-import DragabbleCard from "./Components/DragabbleCard";
+import Board from "./Components/Board";
+
 
 const GlobalStyle = createGlobalStyle`
-  ${reset}
-
-  ;
+  ${reset};
   * {
     box-sizing: border-box;
   }
@@ -99,25 +98,20 @@ const Boards = styled.div`
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
 `;
-const Board = styled.div`
-  width: 100%;
-  min-height: 200px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.boardColor};
-`;
 
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-
+  const changeToDo = () => {
+    // setToDos (toDos, toDoState);
+  };
   const onDragEnd = ({draggableId, destination, source}: DropResult) => {
     //onDragEnd 는 : result, provided 두가지 아규먼트를 가짐
 
     // 1. 변경점이 없으면 아무 변화 없음
     if (!destination) return;
     // 2. 변경점이 있으면 setToDos 실행
-    setToDos((oldToDos) => {
+    setToDos(( oldToDos) => {
       const copyToDos = [...oldToDos];
       //1) delete item on source.index
       copyToDos.splice(source.index, 1);
@@ -135,16 +129,8 @@ function App() {
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
           <Boards>
-            <Droppable droppableId="wrapDrop">
-              {(magic) => (
-                <Board ref={magic.innerRef} {...magic.droppableProps}>
-                  {toDos.map((toDo, index) => (
-                    <DragabbleCard key={toDo} toDo={toDo} index={index} />
-                  ))}
-                  {magic.placeholder}
-                </Board>
-              )}
-            </Droppable>
+              {Object.keys(toDos.map(boardId => <Board boardId={boardId} key={boardId}
+                                                       toDos={toDos[boardId} /> }
           </Boards>
         </Wrapper>
       </DragDropContext>

@@ -42,5 +42,4 @@ return (
     </Draggable>
   </>
 )}
-
 export default React.memo(DragabbleCard);
