@@ -43,4 +43,4 @@ return (
   </>
 )}
 
-export default DragabbleCard
+export default React.memo(DragabbleCard);
