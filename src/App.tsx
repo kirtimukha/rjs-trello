@@ -1,11 +1,10 @@
 import React from "react";
-import {DragDropContext,  Droppable, DropResult,} from "react-beautiful-dnd";
-import styled, {createGlobalStyle} from "styled-components";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
+import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import {useRecoilState} from "recoil";
-import {toDoState} from "./atom/atom";
+import { useRecoilState } from "recoil";
+import { toDoState } from "./atom/atom";
 import Board from "./Components/Board";
-
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -86,7 +85,7 @@ const GlobalStyle = createGlobalStyle`
 }
 const Wrapper = styled.div`
   display: flex;
-  max-width: 480px;
+  max-width: 680px;
   width: 100%;
   height: 100vh;
   margin: 0 auto;
@@ -96,41 +95,40 @@ const Wrapper = styled.div`
 const Boards = styled.div`
   display: grid;
   width: 100%;
+  gap: 10px;
   grid-template-columns: repeat(3, 1fr);
 `;
-
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const changeToDo = () => {
     // setToDos (toDos, toDoState);
   };
-  const onDragEnd = ({draggableId, destination, source}: DropResult) => {
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     //onDragEnd 는 : result, provided 두가지 아규먼트를 가짐
 
     // 1. 변경점이 없으면 아무 변화 없음
     if (!destination) return;
     // 2. 변경점이 있으면 setToDos 실행
-    setToDos(( oldToDos) => {
-      const copyToDos = [...oldToDos];
-      //1) delete item on source.index
-      copyToDos.splice(source.index, 1);
-      //2) put back the item(draggableId) on destination.index
-      copyToDos.splice(destination?.index, 0, draggableId);
-      //3)
-      return copyToDos;
-
-    });
+    //setToDos((oldToDos) => {
+    // const copyToDos = [...oldToDos];
+    // //1) delete item on source.index
+    // copyToDos.splice(source.index, 1);
+    // //2) put back the item(draggableId) on destination.index
+    // copyToDos.splice(destination?.index, 0, draggableId);
+    // //3)
+    // return copyToDos;
+    //
   };
-
   return (
     <>
-      <GlobalStyle/>
+      <GlobalStyle />
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
           <Boards>
-              {Object.keys(toDos.map(boardId => <Board boardId={boardId} key={boardId}
-                                                       toDos={toDos[boardId} /> }
+            {Object.keys(toDos).map((boardId) => (
+              <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
+            ))}
           </Boards>
         </Wrapper>
       </DragDropContext>

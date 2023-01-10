@@ -12,7 +12,7 @@ const BoardWrapper = styled.div`
 `;
 
 interface IBoardProps {
-  toDos: string[];
+  toDos: string[]; //스트링으로 된 어레이임
   boardId: string;
 }
 function Board({ toDos, boardId }: IBoardProps) {
