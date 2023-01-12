@@ -85,41 +85,73 @@ const GlobalStyle = createGlobalStyle`
 }
 const Wrapper = styled.div`
   display: flex;
-  max-width: 680px;
-  width: 100%;
+  //max-width: 680px;
+  width: 100vw;
   height: 100vh;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
 `;
+const Title = styled.h1`
+  font-weight: bold;
+  font-size: 1.125rem;
+`;
+
 const Boards = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   gap: 10px;
-  grid-template-columns: repeat(3, 1fr);
+  //grid-template-columns: repeat(3, 1fr);
 `;
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const changeToDo = () => {
-    // setToDos (toDos, toDoState);
-  };
-  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
-    //onDragEnd 는 : result, provided 두가지 아규먼트를 가짐
-
-    // 1. 변경점이 없으면 아무 변화 없음
+  //onDragEnd 는 :   result, provided 두가지 아규먼트를 가짐
+  const onDragEnd = (result: DropResult) => {
+    const { destination, draggableId, source } = result;
+    console.log(result);
+    //0. 변경사항이 없으면 onDragEnd 기능을 끝낸다.
     if (!destination) return;
-    // 2. 변경점이 있으면 setToDos 실행
-    //setToDos((oldToDos) => {
-    // const copyToDos = [...oldToDos];
-    // //1) delete item on source.index
-    // copyToDos.splice(source.index, 1);
-    // //2) put back the item(draggableId) on destination.index
-    // copyToDos.splice(destination?.index, 0, draggableId);
-    // //3)
-    // return copyToDos;
-    //
+    //1. 같은 보드 안에서 변경할 때
+    if (destination?.droppableId === source.droppableId) {
+      // same board movement.
+      setToDos((allBoards) => {
+        // 변경사항을 감지해서 함수로 전달할다
+        const boardCopy = [...allBoards[source.droppableId]]; // ==>  ...allBoards["To_Do"] || [Doing] || [Done]
+        boardCopy.splice(source.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+
+        return {
+          // 변경된 것만 카피 하고 리턴은 전체 보드(droppableId 이외의 것도 ) 복사하고
+          ...allBoards,
+          //  droppabledId 변형된 보드카피 부분도 리턴해준다.
+          [source.droppableId]: boardCopy, //==>  To_Do: boardCopy
+        };
+      });
+    }
+
+    //2. 다른 보드간의 변경일 때
+    if (destination?.droppableId !== source.droppableId) {
+      //set( (arg(<--현재상태가 그냥 제공됨)) => {})
+      setToDos((allBoards) => {
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destiBoard = [...allBoards[destination.droppableId]]; // 여기 왜 드래거블 아이디가 아니지?
+
+        sourceBoard.splice(source.index, 1);
+        destiBoard.splice(destination?.index, 0, draggableId);
+
+        return {
+          // 변경된 것만 카피 하고 리턴은 전체 보드(droppableId 이외의 것도 ) 복사하고
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destiBoard,
+        };
+      });
+    }
   };
+
   return (
     <>
       <GlobalStyle />
@@ -127,6 +159,7 @@ function App() {
         <Wrapper>
           <Boards>
             {Object.keys(toDos).map((boardId) => (
+              // <Title boardId={boardId} />
               <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
             ))}
           </Boards>

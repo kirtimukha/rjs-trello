@@ -1,11 +1,11 @@
 import "styled-components";
 
 declare module "styled-components" {
-    export interface DefaultTheme {
-        bgColor: string;
-        textColor: string;
-        cardColor: string;
-        boardColor: string;
-    }
-
+  export interface DefaultTheme {
+    bgColor: string;
+    textColor: string;
+    cardColor: string;
+    cardBoxColor: string;
+    boardColor: string;
+  }
 }
