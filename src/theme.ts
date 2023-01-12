@@ -1,9 +1,12 @@
 import { DefaultTheme } from "styled-components";
 
 export const darkTheme: DefaultTheme = {
-  bgColor: "#3F8CF2",
+  bgColor:
+    "linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);",
   textColor: "#000",
+  titleColor: "#007b87",
   cardColor: "#fff",
-  cardBoxColor: "rgb(168 195 122 / 35%);",
-  boardColor: "rgb(255,255,255,0.75);", //#DADFE9
+  cardBoxColor: "#def1b2",
+  cardBoxDraggingColor: "#e3edcd",
+  boardColor: "rgb(255,255,255,0.75);",
 };

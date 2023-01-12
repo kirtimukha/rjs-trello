@@ -91,6 +91,7 @@ const Wrapper = styled.div`
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  background-image: ${(props) => props.theme.bgColor};
 `;
 const Title = styled.h1`
   font-weight: bold;

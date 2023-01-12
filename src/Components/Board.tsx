@@ -3,19 +3,32 @@ import { Droppable } from "react-beautiful-dnd";
 import DragabbleCard from "./DragabbleCard";
 import styled from "styled-components";
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 300px;
-  padding: 20px 10px;
-  padding-top: 10px;
+  padding: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
   min-height: 300px;
 `;
-const BoardWrapper = styled.div`
+
+interface IAreaProps {
+  isDraggingFromThis: boolean;
+  isDraggingOver: boolean;
+}
+const Area = styled.div<IAreaProps>`
+  flex-grow: 1;
   width: 100%;
   min-height: 200px;
   padding: 10px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.cardBoxColor};
+  background-color: ${(props) =>
+    props.isDraggingOver
+      ? props.theme.cardBoxColor
+      : props.isDraggingFromThis
+      ? props.theme.cardBoxDraggingColor
+      : props.theme.cardBoxColor};
+  transition: background-color 0.3s ease-in-out;
 `;
 
 const Title = styled.h2`
@@ -23,6 +36,7 @@ const Title = styled.h2`
   font-weight: 600;
   margin-bottom: 10px;
   font-size: 18px;
+  color: ${(props) => props.theme.titleColor};
 `;
 
 interface IBoardProps {
@@ -34,14 +48,19 @@ function Board({ toDos, boardId }: IBoardProps) {
     <Wrapper>
       <Title>{boardId}</Title>
       <Droppable droppableId={boardId}>
-        {(magic) => (
-          <BoardWrapper ref={magic.innerRef} {...magic.droppableProps}>
+        {(magic, info) => (
+          <Area
+            ref={magic.innerRef}
+            {...magic.droppableProps}
+            isDraggingOver={info.isDraggingOver}
+            isDraggingFromThis={Boolean(info.draggingFromThisWith)}
+          >
             {toDos.map((toDo, index) => (
               // key 와 draggableId 가 동일해야 한다.=> key={toDo} toDo={toDo}
               <DragabbleCard key={toDo} toDo={toDo} index={index} />
             ))}
             {magic.placeholder}
-          </BoardWrapper>
+          </Area>
         )}
       </Droppable>
     </Wrapper>
