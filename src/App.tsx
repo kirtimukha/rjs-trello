@@ -109,10 +109,10 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  //onDragEnd 는 :   result, provided 두가지 아규먼트를 가짐
-  const onDragEnd = (result: DropResult) => {
-    const { destination, draggableId, source } = result;
-    console.log(result);
+  //onDragEnd 는 :   result(여기서는 info로 적음), provided 두가지 아규먼트를 가짐
+  const onDragEnd = (info: DropResult) => {
+    const { destination, draggableId, source } = info;
+    console.log(info);
     //0. 변경사항이 없으면 onDragEnd 기능을 끝낸다.
     if (!destination) return;
     //1. 같은 보드 안에서 변경할 때
