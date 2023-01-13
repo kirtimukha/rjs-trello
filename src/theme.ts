@@ -7,6 +7,6 @@ export const darkTheme: DefaultTheme = {
   titleColor: "#007b87",
   cardColor: "#fff",
   cardBoxColor: "#def1b2",
-  cardBoxDraggingColor: "#e3edcd",
+  cardBoxDraggingColor: "rgba(0,123,135, 0.65)", // "rgba(0,0,0,0.5)",
   boardColor: "rgb(255,255,255,0.75);",
 };

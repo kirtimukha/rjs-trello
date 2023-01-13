@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 300px;
-  padding: 10px;
+  padding: 10px 0 0;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
   min-height: 300px;
@@ -20,8 +20,10 @@ const Area = styled.div<IAreaProps>`
   flex-grow: 1;
   width: 100%;
   min-height: 200px;
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 5px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
   background-color: ${(props) =>
     props.isDraggingOver
       ? props.theme.cardBoxColor

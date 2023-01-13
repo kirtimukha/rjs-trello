@@ -2,12 +2,18 @@ import { Draggable } from "react-beautiful-dnd";
 import React from "react";
 import styled from "styled-components";
 
-const Card = styled.div`
+const Card = styled.div<{ isDragging: boolean }>`
   padding: 10px;
   margin-top: 5px;
-  border-radius: 5px;
-  background-color: ${(props) => props.theme.cardColor};
-
+  border-radius: 5px;  
+  color: ${(props) =>
+    props.isDragging ? props.theme.cardColor : props.theme.textColor};
+  background-color: ${(props) =>
+    props.isDragging
+      ? props.theme.cardBoxDraggingColor
+      : props.theme.cardColor};   
+  box-shadow: ${(props) =>
+    props.isDragging ? "0px 2px 25px rgba(0,0,0,0.5)" : "none"}
   :first-child {
     margin-top: 0;
   }
@@ -29,8 +35,9 @@ function DragabbleCard({ toDo, index }: IDraggableCardProps) {
   return (
     <>
       <Draggable key={toDo} draggableId={toDo} index={index}>
-        {(magic) => (
+        {(magic, snaps) => (
           <Card
+            isDragging={snaps.isDragging}
             ref={magic.innerRef}
             {...magic.draggableProps}
             {...magic.dragHandleProps}
