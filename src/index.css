@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+@font-face {
+font-family: "Raleway";
+  src: url(./src/fonts/Raleway-Regular.ttf);
+}
+:root{
+  --font-nunito:"raleway";
+}
+
+/*@font-face {*/
+/*font-family: "Nunito";*/
+/*  src: url(./src/fonts/Nunito-Regular.ttf);*/
+/*}*/
+/*:root{*/
+/*  --font-nunito:"nunito";*/
+/*}*/
+
+
+
+

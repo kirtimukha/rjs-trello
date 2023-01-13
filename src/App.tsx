@@ -5,11 +5,13 @@ import reset from "styled-reset";
 import { useRecoilState } from "recoil";
 import { toDoState } from "./atom/atom";
 import Board from "./Components/Board";
+import "./index.css";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
   * {
     box-sizing: border-box;
+
   }
 
   html, body, div, span, applet, object, iframe,
@@ -45,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Open Sans', 'Source Sans Pro', sans-serif;
+    font-family: var(--font-nunito);
     line-height: 1;
     background-color: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.textColor};
@@ -74,8 +76,8 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-
-  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
+  //
+  //@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
 `;
 {
   /* [ Droppable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. 3. 첫번째 아규먼트는 droppable로부터 받음. 4. draggableProps 와 dragHandelProps 속성을 가짐*/
