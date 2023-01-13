@@ -50,6 +50,9 @@ function Board({ toDos, boardId }: IBoardProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const onClick = () => {
     inputRef.current?.focus();
+    setTimeout(() => {
+      inputRef.current?.blur();
+    }, 2000);
   };
   return (
     <Wrapper>
