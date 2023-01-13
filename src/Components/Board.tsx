@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Droppable } from "react-beautiful-dnd";
 import DragabbleCard from "./DragabbleCard";
 import styled from "styled-components";
@@ -20,7 +20,7 @@ const Area = styled.div<IAreaProps>`
   flex-grow: 1;
   width: 100%;
   min-height: 200px;
-  padding: 5px 10px;
+  padding: 10px 12px 15px;
   border-radius: 5px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
@@ -35,7 +35,7 @@ const Area = styled.div<IAreaProps>`
 
 const Title = styled.h2`
   text-align: center;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 10px;
   font-size: 18px;
   color: ${(props) => props.theme.titleColor};
@@ -45,10 +45,17 @@ interface IBoardProps {
   toDos: string[]; //스트링으로 된 어레이임
   boardId: string;
 }
+
 function Board({ toDos, boardId }: IBoardProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onClick = () => {
+    inputRef.current?.focus();
+  };
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      <input type="text" ref={inputRef} placeholder="grab me!" />
+      <button onClick={onClick}>Click</button>
       <Droppable droppableId={boardId}>
         {(magic, info) => (
           <Area
@@ -68,4 +75,6 @@ function Board({ toDos, boardId }: IBoardProps) {
     </Wrapper>
   );
 }
+
+//ref란? react 코드에서 html 요소에 접근하는 방법
 export default Board;
