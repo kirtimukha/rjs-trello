@@ -1,7 +1,23 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import DragabbleCard from "./DragabbleCard";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
+
+interface IAreaProps {
+  isDraggingFromThis: boolean;
+  isDraggingOver: boolean;
+}
+interface IBoardProps {
+  toDos: string[]; //스트링으로 된 어레이임
+  boardId: string;
+}
+
+interface IForm {
+  toDo: string;
+}
+/* ./end type definition */
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,10 +28,6 @@ const Wrapper = styled.div`
   min-height: 300px;
 `;
 
-interface IAreaProps {
-  isDraggingFromThis: boolean;
-  isDraggingOver: boolean;
-}
 const Area = styled.div<IAreaProps>`
   flex-grow: 1;
   width: 100%;
@@ -41,24 +53,26 @@ const Title = styled.h2`
   color: ${(props) => props.theme.titleColor};
 `;
 
-interface IBoardProps {
-  toDos: string[]; //스트링으로 된 어레이임
-  boardId: string;
-}
+const Form = styled.form``;
+
+/* ./ end Stye  */
 
 function Board({ toDos, boardId }: IBoardProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const onClick = () => {
-    inputRef.current?.focus();
-    setTimeout(() => {
-      inputRef.current?.blur();
-    }, 2000);
+  const { register, setValue, handleSubmit } = useForm();
+  const onValid = (data: IForm) => {
+    console.log(data);
+    setValue("toDo", "");
   };
   return (
     <Wrapper>
       <Title>{boardId}</Title>
-      <input type="text" ref={inputRef} placeholder="grab me!" />
-      <button onClick={onClick}>Click</button>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <input
+          {...register("toDo", { required: true })}
+          type="text"
+          placeholder={`Add task on ${boardId}`}
+        />
+      </Form>
       <Droppable droppableId={boardId}>
         {(magic, info) => (
           <Area
