@@ -3,13 +3,15 @@ import { Droppable } from "react-beautiful-dnd";
 import DragabbleCard from "./DragabbleCard";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { ITodo, toDoState } from "../atom/atom";
+import { useSetRecoilState } from "recoil";
 
 interface IAreaProps {
   isDraggingFromThis: boolean;
   isDraggingOver: boolean;
 }
 interface IBoardProps {
-  toDos: string[]; //스트링으로 된 어레이임
+  toDos: ITodo[]; //스트링으로 된 어레이임
   boardId: string;
 }
 
@@ -58,10 +60,30 @@ const Form = styled.form``;
 /* ./ end Stye  */
 
 function Board({ toDos, boardId }: IBoardProps) {
-  const { register, setValue, handleSubmit } = useForm();
-  const onValid = (data: IForm) => {
-    console.log(data);
-    setValue("toDo", "");
+  //입력받은 newToDo를 어레이에 집어넣기
+  const setToDos = useSetRecoilState(toDoState);
+  const { register, setValue, handleSubmit } = useForm<IForm>();
+
+  const onValid = ({ toDo }: IForm) => {
+    const newToDo = {
+      id: Date.now(),
+      text: toDo,
+    };
+
+    setToDos((allBoards) => {
+      return {
+        ...allBoards,
+        [boardId]: [
+          //boardId 가 아니고 [boardId]로 써야 함
+          // 왜newToDo.boardId가 아닐까...
+          ...allBoards[boardId],
+          newToDo,
+        ],
+      };
+    });
+
+    setValue("toDo", ""); // 이게 왜 필요하지???? // 삭제하면 인풋에 기재하던 내용이 그대로 남는다.
+    //엔터 후의 인풋 요소에 텍스트를 없애주는 기능
   };
   return (
     <Wrapper>
@@ -76,14 +98,19 @@ function Board({ toDos, boardId }: IBoardProps) {
       <Droppable droppableId={boardId}>
         {(magic, info) => (
           <Area
-            ref={magic.innerRef}
-            {...magic.droppableProps}
             isDraggingOver={info.isDraggingOver}
             isDraggingFromThis={Boolean(info.draggingFromThisWith)}
+            ref={magic.innerRef}
+            {...magic.droppableProps}
           >
             {toDos.map((toDo, index) => (
               // key 와 draggableId 가 동일해야 한다.=> key={toDo} toDo={toDo}
-              <DragabbleCard key={toDo} toDo={toDo} index={index} />
+              <DragabbleCard
+                key={toDo.id}
+                index={index}
+                toDoId={toDo.id}
+                toDoText={toDo.text}
+              />
             ))}
             {magic.placeholder}
           </Area>

@@ -123,8 +123,12 @@ function App() {
       setToDos((allBoards) => {
         // 변경사항을 감지해서 함수로 전달할다
         const boardCopy = [...allBoards[source.droppableId]]; // ==>  ...allBoards["To_Do"] || [Doing] || [Done]
+        const taskObj = boardCopy[source.index]; //선택한 오브젝트를 받아온다. 이제 스트링이 아니고 오브젝트이다.
+        // 원래는 draggableId 가 그냥 string이었는데 이제 todo.id 의 형태가 되므로, "To Do": [{text: "hello", id: "1"} ]
+        //  source.index로 접근한다.
+
         boardCopy.splice(source.index, 1);
-        boardCopy.splice(destination?.index, 0, draggableId);
+        boardCopy.splice(destination?.index, 0, taskObj);
 
         return {
           // 변경된 것만 카피 하고 리턴은 전체 보드(droppableId 이외의 것도 ) 복사하고
@@ -140,10 +144,12 @@ function App() {
       //set( (arg(<--현재상태가 그냥 제공됨)) => {})
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
+
+        const taskObj = sourceBoard[source.index]; //선택한 오브젝트를 받아온다. 이제 스트링이 아니고 오브젝트이다.
         const destiBoard = [...allBoards[destination.droppableId]]; // 여기 왜 드래거블 아이디가 아니지?
 
         sourceBoard.splice(source.index, 1);
-        destiBoard.splice(destination?.index, 0, draggableId);
+        destiBoard.splice(destination?.index, 0, taskObj);
 
         return {
           // 변경된 것만 카피 하고 리턴은 전체 보드(droppableId 이외의 것도 ) 복사하고

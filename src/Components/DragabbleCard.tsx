@@ -20,10 +20,11 @@ const Card = styled.div<{ isDragging: boolean }>`
 `;
 
 interface IDraggableCardProps {
-  toDo: string;
+  toDoId: number;
+  toDoText: string;
   index: number;
 }
-function DragabbleCard({ toDo, index }: IDraggableCardProps) {
+function DragabbleCard({ toDoId, toDoText, index }: IDraggableCardProps) {
   // console.log(toDo, "has been rendered."); //리액트는 컴포넌트의 state가 변경되면 칠드런 모두가 재렌더링 된다.
   // [ @@ 불필요한 렌더링 방지 REACT MEMO @@ ]
   // ReactMemo 가 사용된 컴포넌트는 prop이 변경될 때만 재렌더링 됨
@@ -34,7 +35,7 @@ function DragabbleCard({ toDo, index }: IDraggableCardProps) {
   };
   return (
     <>
-      <Draggable key={toDo} draggableId={toDo} index={index}>
+      <Draggable key={toDoId} draggableId={toDoId + ""} index={index}>
         {(magic, snaps) => (
           <Card
             isDragging={snaps.isDragging}
@@ -43,7 +44,7 @@ function DragabbleCard({ toDo, index }: IDraggableCardProps) {
             {...magic.dragHandleProps}
             onChange={changeToDo}
           >
-            {toDo}
+            {toDoText}
           </Card>
         )}
       </Draggable>

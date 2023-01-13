@@ -1,16 +1,22 @@
 import { atom } from "recoil";
 //selector : state 를 입력 받는 함수를 거쳐서 반환된 값을 말함
 
-interface ITodoState {
-  [key: string]: string[]; // string[] : string 들의 어레이
+export interface ITodo {
+  id: number;
+  text: string;
 }
-export const toDoState = atom({
+
+interface ITodoState {
+  [key: string]: ITodo[]; // string[] : string 들의 어레이
+}
+export const toDoState = atom<ITodoState>({
   key: "toDo",
   default: {
-    "To Do": ["a", "b"],
-    Doing: ["c", "d", "e"],
-    Done: ["f"],
-    // 4라인을 인터페이스를 통해서
-    // lalalal : []  형태의 어레이를 추가할 수 있게 된다.
+    //to do oject를 가진 어레이로 변경했음
+    // 변경 전, "To Do": ["a" ,"b"]
+    // 변경 후,  "To Do": [{text: "hello", id: 1},{text: "hello2", id: 2} ]
+    "To Do": [],
+    Doing: [],
+    Done: [],
   },
 });
