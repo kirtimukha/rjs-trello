@@ -76,8 +76,7 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-  //
-  //@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
+  button{cursor: pointer}
 `;
 {
   /* [ Droppable 의 특징 ] 1. children 을 가진다 2. children 은 함수이다. 3. 첫번째 아규먼트는 droppable로부터 받음. 4. draggableProps 와 dragHandelProps 속성을 가짐*/
@@ -94,10 +93,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-image: ${(props) => props.theme.bgColor};
-`;
-const Title = styled.h1`
-  font-weight: bold;
-  font-size: 1.125rem;
 `;
 
 const Boards = styled.div`

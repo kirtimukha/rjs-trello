@@ -1,13 +1,15 @@
 import { Draggable } from "react-beautiful-dnd";
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Card = styled.div<{ isDragging: boolean }>`
   padding: 10px;
   margin-top: 5px;
   border-radius: 5px;  
-  color: ${(props) =>
-    props.isDragging ? props.theme.cardColor : props.theme.textColor};
+  color:${(props) =>
+    props.isDragging ? props.theme.cardColor : props.theme.textColor}
   background-color: ${(props) =>
     props.isDragging
       ? props.theme.cardBoxDraggingColor
@@ -16,6 +18,25 @@ const Card = styled.div<{ isDragging: boolean }>`
     props.isDragging ? "0px 2px 25px rgba(0,0,0,0.5)" : "none"}
   :first-child {
     margin-top: 0;
+  }
+`;
+
+const WrapperEdit = styled.div`
+  float: right;
+`;
+const EditBtn = styled.button`
+  margin-left: 4px;
+  color: ${(props) => props.theme.titleColor};
+  border: 1px solid ${(props) => props.theme.titleColor};
+  border-radius: 4px;
+  background: transparent;
+  transition: all 0.3s ease-in-out;
+  &:first-child {
+    margin: 0;
+  }
+  &:hover {
+    background: ${(props) => props.theme.titleColor};
+    color: ${(props) => props.theme.cardColor};
   }
 `;
 
@@ -44,7 +65,15 @@ function DragabbleCard({ toDoId, toDoText, index }: IDraggableCardProps) {
             {...magic.dragHandleProps}
             onChange={changeToDo}
           >
-            {toDoText}
+            {toDoText}{" "}
+            <WrapperEdit>
+              <EditBtn>
+                <FontAwesomeIcon icon={faPencil} size="xs" />
+              </EditBtn>
+              <EditBtn>
+                <FontAwesomeIcon icon={faTrash} size="xs" />
+              </EditBtn>
+            </WrapperEdit>
           </Card>
         )}
       </Draggable>

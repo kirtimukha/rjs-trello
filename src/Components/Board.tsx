@@ -51,12 +51,22 @@ const Title = styled.h2`
   text-align: center;
   font-weight: bold;
   margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 1.125rem;
   color: ${(props) => props.theme.titleColor};
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  padding: 0.5rem;
+`;
 
+const Input = styled.input`
+  outline: none;
+  width: 100%;
+  color: ${(props) => props.theme.titleColor};
+  border: none;
+  border-bottom: 1px solid ${(props) => props.theme.titleColor};
+  background: transparent;
+`;
 /* ./ end Stye  */
 
 function Board({ toDos, boardId }: IBoardProps) {
@@ -89,7 +99,7 @@ function Board({ toDos, boardId }: IBoardProps) {
     <Wrapper>
       <Title>{boardId}</Title>
       <Form onSubmit={handleSubmit(onValid)}>
-        <input
+        <Input
           {...register("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}
