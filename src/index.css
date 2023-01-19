@@ -2,10 +2,20 @@
 
 @font-face {
 font-family: "Raleway";
-  src: url(fonts/Raleway-Regular.ttf);
+  src: url(./src/fonts/Raleway-Regular.ttf);
 }
-:root {
-  --font-nunito: "raleway";
+:root{
+  --font-nunito:"raleway";
 }
+
+/*@font-face {*/
+/*font-family: "Nunito";*/
+/*  src: url(./src/fonts/Nunito-Regular.ttf);*/
+/*}*/
+/*:root{*/
+/*  --font-nunito:"nunito";*/
+/*}*/
+
+
 
 
